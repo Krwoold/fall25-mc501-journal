@@ -1,0 +1,70 @@
+---
+title: "2025-09-30"
+format:
+  html: default
+  pdf: default
+params:
+  course: "mc501"
+  word_min: 450
+  word_max: 500
+  p1: 'The chapter opens with the story of John Snow and the Broad Street pump—an example of how sampling can reveal powerful truths about a whole system. Reflect on a time you formed a strong opinion or insight based on a small piece of evidence (e.g., a social media post, a conversation, a single article). Was that sample representative of the broader reality? What does this example teach you about the risks or rewards of inference from a small sample?'
+
+---
+
+## Choose **one** prompt to answer
+
+> **Prompt A:** `r params$p1`
+
+
+
+---
+
+## Response
+
+<!-- RESPONSE-START -->
+*Write your answer to **one** 
+I have witnessed many times in conversations and gossip where a small bit of information is given about a person and it is almost tempting not to run with that small bit of information and rely on it as evidence for circumstances to come. Sometimes these conversations happen in person, but other times they can happen when communicating via text about people on social media. One time I reflected back on an instance with a girl on social media. This girl looked mean on social media, she went to my school and when I saw her interact with others she appeared stand-offish to me and almost gave the vibe of a “mean girl.” I had also seen her absent from events that required her attendance, such as class department meetings. On the flip side, however, her aesthetic seemed very colorful. Despite my perception of her being a mean girl, she was someone I still wanted to know more about, up to the point that I regularly looked at her social media. 
+Turns out, I heard much more about this girl during my sorority’s recruitment and it sounded like she was actually a great girl, who maybe I had some incorrect preconceptions of. Fast forward, she actually ended up being my roommate of two years and a very dear friend of mine. I have since learned that she is very bubbly, protective of her friends, loving, and creative. 
+So, the samples I had heard of her and the samples I had incorrectly and unfairly created were proved extremely wrong and very short of the broader reality. It did ring true, however, that her life was colorful and I am now a living testimony as to why others should want to be her friend. And those reasons are that she is fun, caring, welcoming and accepting. 
+I think this example taught me that there are risks and rewards of inference from a small sample. Although I created my own negative perceptions about this girl, my sorority continued to perceive her as someone they wanted in their sorority. Luckily, her acceptance into the sorority was what helped and made me look past the previous ill reputation I had given this girl. It goes to say, I reaped the benefits of my sorority’s risk in small inferences, had I gone on with my own assumptions, it is unknown whether or not I would actually truly befriend this girl to the level that I have today. So, whether a small sample produces a risk or reward could depend on the person observing the small sample. Furthermore, the person observing the sample could change others opinions on the sample based on their observations. It’s important to note your observer and their morals and principles. Additionally, I needed a larger pool of evidence on this girl to correctly perceive her, and my larger pool was my sorority.
+<!-- RESPONSE-END -->
+
+---
+
+## Word Count & Range Check
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+get_response_text <- function() {
+  f <- knitr::current_input()
+  if (is.null(f) || !file.exists(f)) return("")
+  x <- readLines(f, warn = FALSE)
+  # Find the lines that EXACTLY match the start/end markers
+  s <- grep("^<!-- RESPONSE-START -->$", x)
+  e <- grep("^<!-- RESPONSE-END -->$", x)
+  if (length(s) != 1 || length(e) != 1 || e <= s) return("")
+  paste(x[(s + 1L):(e - 1L)], collapse = "\n")
+}
+count_words <- function(txt) {
+  # Remove code blocks and inline code before counting
+  txt <- gsub("```[\\s\\S]*?```", " ", txt, perl = TRUE)
+  txt <- gsub("`[^`]*`", " ", txt, perl = TRUE)
+  # Keep letters, numbers, spaces, hyphens, and apostrophes
+  txt <- gsub("[^\\p{L}\\p{N}\\s'-]", " ", txt, perl = TRUE)
+  # Split by whitespace and count non-empty words
+  words <- unlist(strsplit(txt, "\\s+", perl = TRUE))
+  words <- words[nzchar(words)]
+  length(words)
+}
+txt <- get_response_text()
+n <- count_words(txt)
+minw <- as.integer(params$word_min)
+maxw <- as.integer(params$word_max)
+in_range <- n >= minw && n <= maxw
+cat(sprintf("**Word count:** %d  \n", n))
+cat(sprintf("**Required range (%s):** %d–%d words  \n",
+            toupper(params$course), minw, maxw))
+cat(if (in_range) "**Status:** ✅ In range\n" else "**Status:** ❌ Out of range\n")
+```
