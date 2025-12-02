@@ -1,0 +1,66 @@
+---
+title: "2025-09-19"
+format:
+  html: default
+  pdf: default
+params:
+  course: "mc501"
+  word_min: 450
+  word_max: 500
+ 
+  p3: 'The chapter emphasized that your research question or hypothesis should directly shape the method you choose. Why do you think that connection is so important? Choose one method (e.g., experiment, interview, content analysis) and describe what kind of research question or hypothesis best fits that method. Use your own topic or one discussed in the chapter as an example.'
+---
+
+## Choose **one** prompt to answer
+
+> **Prompt C:** `r params$p3`
+
+------------------------------------------------------------------------
+
+## Response
+
+<!-- RESPONSE-START -->
+
+I believe there is a connection between the content we choose and they ways we approach learning about them. If we approach a research question or hypothesis with the wrong method or connection, then they may affect the outcome of the information we find because our approach shapes the lens of information we are looking through to gain research. Essentially, a research method can determine what kind of data you get, so it is crucial to utilize the correct one. With an interview method for research, I personally would look to find a diverse range of personal testimonies from people. For instance, my research topic has to do with social media. An interview method might ask people why they use social media. This question offers leeway for a diverse range of answers and gives people a lot of room to discuss their own opinions on how and why they use social media. In an interview, I am searching for extra details of a person’s personal life that I may not be able to find on a screen. In my personal opinion, choosing to interview someone integrates them more into one’s research because you are taking time to have a face to face interaction with them. Additionally, you probably would not interview someone who has a story you do not care about, so by interviewing someone, they are more likely to be highlighted by your research. However, if I kept that research question, but used a content analysis research method, it may be hard for me to conclude a concrete answer on why people use social media.While I could track things, for example likes, comments and reposts, that does not truly tell me the reason of why a person uses social media. I may conclude something like they use it to follow these influencers or whatnot, but the answer I may get from interviewing them may be that they follow influencers for advice of what to feed themselves or how to meal plan. Or, furthermore, that they followed an influencer to enter a giveaway and continued following them because they liked their content. For my topic about social media, I am wanting to know how athletic teams interact with fans through social media. So, since it is an online interaction I am observing, it is more likely I will look online for my research using a content analysis This can help me gain information like what types of media that was posted resonated more with fans or what types of media do I know fans will care about and share with their friends online. My research topic is not particularly focused on why people use social media, so I am not as concerned about why people follow certain sports accounts. Instead, I am concerned with what makes people want to follow certain sports accounts - what information is being shared do they hold pertinent and important to themselves?
+
+<!-- RESPONSE-END -->
+
+------------------------------------------------------------------------
+
+## Word Count & Range Check
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+get_response_text <- function() {
+  f <- knitr::current_input()
+  if (is.null(f) || !file.exists(f)) return("")
+  x <- readLines(f, warn = FALSE)
+  # Find the lines that EXACTLY match the start/end markers
+  s <- grep("^<!-- RESPONSE-START -->$", x)
+  e <- grep("^<!-- RESPONSE-END -->$", x)
+  if (length(s) != 1 || length(e) != 1 || e <= s) return("")
+  paste(x[(s + 1L):(e - 1L)], collapse = "\n")
+}
+count_words <- function(txt) {
+  # Remove code blocks and inline code before counting
+  txt <- gsub("```[\\s\\S]*?```", " ", txt, perl = TRUE)
+  txt <- gsub("`[^`]*`", " ", txt, perl = TRUE)
+  # Keep letters, numbers, spaces, hyphens, and apostrophes
+  txt <- gsub("[^\\p{L}\\p{N}\\s'-]", " ", txt, perl = TRUE)
+  # Split by whitespace and count non-empty words
+  words <- unlist(strsplit(txt, "\\s+", perl = TRUE))
+  words <- words[nzchar(words)]
+  length(words)
+}
+txt <- get_response_text()
+n <- count_words(txt)
+minw <- as.integer(params$word_min)
+maxw <- as.integer(params$word_max)
+in_range <- n >= minw && n <= maxw
+cat(sprintf("**Word count:** %d  \n", n))
+cat(sprintf("**Required range (%s):** %d–%d words  \n",
+            toupper(params$course), minw, maxw))
+cat(if (in_range) "**Status:** ✅ In range\n" else "**Status:** ❌ Out of range\n")
+```
