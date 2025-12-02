@@ -1,0 +1,64 @@
+---
+title: "2025-09-16"
+format:
+  html: default
+  pdf: default
+params:
+  course: "mc501"
+  word_min: 450
+  word_max: 500
+  p1: 'Reflect on the metaphor introduced at the beginning of the chapter: walking into a conversation that’s already underway. Have you ever had that experience in real life (in class, online, or at work)? What happened when you did—or didn’t—take the time to listen first? How does that scenario relate to the role of the literature review in research? Why is it important to understand what’s already been said before adding your ideas?'
+---
+
+## Choose **one** prompt to answer
+
+> **Prompt A:** `r params$p1`
+
+------------------------------------------------------------------------
+
+## Response
+
+<!-- RESPONSE-START -->
+
+I have walked into many conversations that were already underway. I think that is a part of socializing and meeting people, but the tact that is important is knowing when to enter or dismiss the conversation. Sometimes I think it can be appropriate to ask what the topic being discussed is, however sometimes observing context on your own can also be the route to go. Nevertheless, without considering context and understanding the topic at hand, it is harder to relate to those in conversation and relate your personal experience to the ones they are talking about. There are unfortunate cases where not taking time to listen can result in making offensive comments because of lack of context and people’s backgrounds, which were established prior to entering a conversation. Additionally, when you enter a conversation without listening and provide inaccurate information or input, those previously involved in the conversation could become frustrated with your involvement if it is irrelevant to the topic at hand. If you do not listen properly to a conversation before engaging in it, you could provide the complete opposite that does not pertain to anything others are saying. You could also supply repetitive information that others have already covered. For instance, if someone was mentioning a discount on an item in a conversation and had discussed it with members, it would be repetitive if you entered the conversation and started speaking about the same new discount you came across and could also in turn make participants tune you out because you made an impression of not being fully present in the conversation. This scenario relates to the role of a literature review because in a literature review you are understanding the context and backgrounds of authors you may have not known previously. The literature review itself is the "listening" part of the research process. It's the act of reading and synthesizing existing work before you add your own voice (your new research).Understanding where they stand and their positions on certain topics can help the reader, myself in this scenario, understand why the author is arguing specific points and disregarding others. It can help explain or make one curious about certain gaps in the writings. Furthermore, not having context to a literature review makes it hard to review. In order to review and critique something, you have to have full awareness of it and need to know why and how things work. Knowing history of authors and their work can help lend guidance as to why they did not cover certain topics, so where it might be a gap to someone just entering the conversation,. If one was informed of the conversation before reading an article, they may come into it knowing information gaps the article provided. These gaps are often where new research questions come from. A literature review helps you see what has not been said, which is your opportunity to contribute to the conversation."
+<!-- RESPONSE-END -->
+
+---
+
+## Word Count & Range Check
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+get_response_text <- function() {
+  f <- knitr::current_input()
+  if (is.null(f) || !file.exists(f)) return("")
+  x <- readLines(f, warn = FALSE)
+  # Find the lines that EXACTLY match the start/end markers
+  s <- grep("^<!-- RESPONSE-START -->$", x)
+  e <- grep("^<!-- RESPONSE-END -->$", x)
+  if (length(s) != 1 || length(e) != 1 || e <= s) return("")
+  paste(x[(s + 1L):(e - 1L)], collapse = "\n")
+}
+count_words <- function(txt) {
+  # Remove code blocks and inline code before counting
+  txt <- gsub("```[\\s\\S]*?```", " ", txt, perl = TRUE)
+  txt <- gsub("`[^`]*`", " ", txt, perl = TRUE)
+  # Keep letters, numbers, spaces, hyphens, and apostrophes
+  txt <- gsub("[^\\p{L}\\p{N}\\s'-]", " ", txt, perl = TRUE)
+  # Split by whitespace and count non-empty words
+  words <- unlist(strsplit(txt, "\\s+", perl = TRUE))
+  words <- words[nzchar(words)]
+  length(words)
+}
+txt <- get_response_text()
+n <- count_words(txt)
+minw <- as.integer(params$word_min)
+maxw <- as.integer(params$word_max)
+in_range <- n >= minw && n <= maxw
+cat(sprintf("**Word count:** %d  \n", n))
+cat(sprintf("**Required range (%s):** %d–%d words  \n",
+            toupper(params$course), minw, maxw))
+cat(if (in_range) "**Status:** ✅ In range\n" else "**Status:** ❌ Out of range\n")
+```
