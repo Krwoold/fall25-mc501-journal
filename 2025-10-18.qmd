@@ -1,0 +1,86 @@
+---
+title: "2025-10-18"
+format:
+  html: default
+  pdf: default
+params:
+  course: "mc501"
+  word_min: 450
+  word_max: 500
+  p1: 'Think of a headline or news story you’ve seen that claims one thing causes another (e.g., "Teens who use social media are more likely to be depressed"). Based on what you''ve learned in this chapter, explain why this claim may or may not be valid. What type of research design would be necessary to make such a claim confidently?'
+editor: 
+  markdown: 
+    wrap: sentence
+---
+
+## Choose **one** prompt to answer
+
+> **Prompt A:** `r params$p1`
+
+------------------------------------------------------------------------
+
+## Response
+
+<!-- RESPONSE-START -->
+
+\*Write your answer to **one** of the prompts here.
+As a sister, a frequent headline on my Instagram is that having a sister makes you X.
+The particular headline I am going to tailor to this assignment is that having a sister makes you a better person.
+There are a number of reasons why this claim can and cannot be valid.
+First, it can be valid because having a sibling in general helps one develop useful life-skills that help you become a better person, such as patience and kindness.
+However, this headline can also be claimed as invalid because everyone has a different experience with their sibling since everyone has a different home life experience.
+While one situation of having a sibling can build great integrity and character, another situation of having a sibling can build bitterness or impatience .It is possible having a sister makes one a better person because of the parents involved, which would make the headline nonspurious with the parents being the third variable involved that is causing a result on the other two.
+To establish a true causal link, the researcher must be able to rule out any and all plausible rival explanations.
+Based on the chapter, this headline may be based on correlational research and correlation does not equal causation.
+So, although there may be a correlation between possible survey results, that does not mean these variables are in a cause and effect relationship.
+To make this research true and valid, there would need to be some kind of true experiment.
+For this headline, a true experiment could come in the form of a random assignment.
+In a controllable world, this true experiment would involve having two groups.
+A treatment group with brothers who have sisters and a control group with brothers who have brothers or boys who are only children.
+A newborn would then need to be randomly assigned to one of these groups and measurements would be made later in life.
+In an experiment such as the previous example given, it is hard to maintain control over the experiment since you cannot control what type of kid you have and thus also cannot control what kind of environment you put them in, whether their siblings are boys or girls.
+So, while it is possible that newborn were born into the needed control and treatment group, it would be hard to specifically monitor.
+There is a possibility of truth in this headline, however, since there is not a definite way to prove that there is validity to the headline it is hard to actually say weather or not the information is accurate and applicable to every situation of siblings.
+I would be interested to see how pages on Instagram are coming to these conclusions enough to post them and if they are basing it on correlational research, or making these treatment and control groups, although that would be quite hard to attain.
+
+Do not write anything else in this chapter.\* <!-- RESPONSE-END -->
+
+------------------------------------------------------------------------
+
+## Word Count & Range Check
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+get_response_text <- function() {
+  f <- knitr::current_input()
+  if (is.null(f) || !file.exists(f)) return("")
+  x <- readLines(f, warn = FALSE)
+  # Find the lines that EXACTLY match the start/end markers
+  s <- grep("^<!-- RESPONSE-START -->$", x)
+  e <- grep("^<!-- RESPONSE-END -->$", x)
+  if (length(s) != 1 || length(e) != 1 || e <= s) return("")
+  paste(x[(s + 1L):(e - 1L)], collapse = "\n")
+}
+count_words <- function(txt) {
+  # Remove code blocks and inline code before counting
+  txt <- gsub("```[\\s\\S]*?```", " ", txt, perl = TRUE)
+  txt <- gsub("`[^`]*`", " ", txt, perl = TRUE)
+  # Keep letters, numbers, spaces, hyphens, and apostrophes
+  txt <- gsub("[^\\p{L}\\p{N}\\s'-]", " ", txt, perl = TRUE)
+  # Split by whitespace and count non-empty words
+  words <- unlist(strsplit(txt, "\\s+", perl = TRUE))
+  words <- words[nzchar(words)]
+  length(words)
+}
+txt <- get_response_text()
+n <- count_words(txt)
+minw <- as.integer(params$word_min)
+maxw <- as.integer(params$word_max)
+in_range <- n >= minw && n <= maxw
+cat(sprintf("**Word count:** %d  \n", n))
+cat(sprintf("**Required range (%s):** %d–%d words  \n",
+            toupper(params$course), minw, maxw))
+cat(if (in_range) "**Status:** ✅ In range\n" else "**Status:** ❌ Out of range\n")
+```
