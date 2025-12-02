@@ -1,0 +1,69 @@
+---
+title: "2025-10-14"
+format:
+  html: default
+  pdf: default
+params:
+  course: "mc501"
+  word_min: 450
+  word_max: 500
+  p3: 'Why do you think people often ignore or skip surveys? From your perspective as both a respondent and future researcher, what strategies would make you more likely to complete a survey? How do your answers shape the way researchers must think about sampling and nonresponse?'
+---
+
+## Choose **one** prompt to answer
+
+> **Prompt C:** `r params$p3`
+
+------------------------------------------------------------------------
+
+## Response
+
+<!-- RESPONSE-START -->
+
+I personally think that people skip surveys because the topic may not pertain to them or they may seem tedious, pointless, or tiresome. Also, the commonality of random surveys may desensitize people to them, so no one actually sees or cares what research they are going towards. Surveys online, for instance ones as Youtube ads, never say what kind of cause or research they are going to. I think people would be more likely to complete a survey if they knew what change their answers were going towards. As previously mentioned, some Youtube ads are surveys about different TV shows. People would most likely be more keen to answer those surveys if they knew it was going towards Netflix’s selections of shows or some other kind of result. I believe that if people knew they were making a difference or their answers held weight towards a particular issue, they would answer surveys more readily and easily. Incentives could also be used to entice people to finish surveys. Some websites will pay people as an incentive to complete various surveys. This seems to be a successful tactic, especially since there are never shortages of surveys. Particular to me, I would be more willing to complete a survey if I knew my answers were going towards a change. Of course, I would also accept cash for my survey answers. The context of surveys also matters. Depending on where they are seen and if they are viewed as spam can also indicate why they are not answered. Surveys in front of Youtube videos can easily be skipped because the viewers focus is on getting to their video and to not have ads interfere with whatever they are desiring to watch.
+
+My answers shape researchers' thoughts, firstly, because I am a researcher and for my research question I need to think through this lens of how I can motivate people to take surveys to collect information for myself. Furthermore, I think I am a prime age for survey recipients, so it is possible that my input represents a large group of people my age who do not answer surveys.Answers could shape researchers thoughts b equate it could infer that what they are researching could not hold any interest, or they might not be receiving answers because there is simply no data or evidence to form an answer. Nonresponses can help researchers reshape their questions, so that they may seem more appealing to people to answer. People may find a researcher’s topic more interesting based on the questions they use in a survey and the language they use in said questions. The same goes for phrasing a survey. Giving background information on a survey before asking questions can not only help give context, but it can also help someone taking the survey relate more to it and feel more included in the conversation.
+
+\
+
+*Write your answer to **one** of the prompts here. Do not write anything else in this chapter.* <!-- RESPONSE-END -->
+
+------------------------------------------------------------------------
+
+## Word Count & Range Check
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+get_response_text <- function() {
+  f <- knitr::current_input()
+  if (is.null(f) || !file.exists(f)) return("")
+  x <- readLines(f, warn = FALSE)
+  # Find the lines that EXACTLY match the start/end markers
+  s <- grep("^<!-- RESPONSE-START -->$", x)
+  e <- grep("^<!-- RESPONSE-END -->$", x)
+  if (length(s) != 1 || length(e) != 1 || e <= s) return("")
+  paste(x[(s + 1L):(e - 1L)], collapse = "\n")
+}
+count_words <- function(txt) {
+  # Remove code blocks and inline code before counting
+  txt <- gsub("```[\\s\\S]*?```", " ", txt, perl = TRUE)
+  txt <- gsub("`[^`]*`", " ", txt, perl = TRUE)
+  # Keep letters, numbers, spaces, hyphens, and apostrophes
+  txt <- gsub("[^\\p{L}\\p{N}\\s'-]", " ", txt, perl = TRUE)
+  # Split by whitespace and count non-empty words
+  words <- unlist(strsplit(txt, "\\s+", perl = TRUE))
+  words <- words[nzchar(words)]
+  length(words)
+}
+txt <- get_response_text()
+n <- count_words(txt)
+minw <- as.integer(params$word_min)
+maxw <- as.integer(params$word_max)
+in_range <- n >= minw && n <= maxw
+cat(sprintf("**Word count:** %d  \n", n))
+cat(sprintf("**Required range (%s):** %d–%d words  \n",
+            toupper(params$course), minw, maxw))
+cat(if (in_range) "**Status:** ✅ In range\n" else "**Status:** ❌ Out of range\n")
+```
