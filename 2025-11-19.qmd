@@ -1,0 +1,72 @@
+---
+title: "2025-11-19"
+format:
+  html: default
+  pdf: default
+params:
+  course: "mc501"
+  word_min: 450
+  word_max: 500
+  p3: 'Imagine you find a statistically significant result in your research—but the effect size is tiny. Would you still report it? Why or why not? How do you balance statistical significance with practical or social importance? What responsibility do researchers have when communicating findings that might be misinterpreted?'
+---
+
+## Choose **one** prompt to answer
+
+> **Prompt C:** `r params$p3`
+
+---
+
+## Response
+
+<!-- RESPONSE-START -->
+*Write your answer to **one** of the prompts here. Do not write anything else in this chapter.*
+I would still report a statistically significant result even for a small effect size, but it is important to be careful in describing the context. Statistical significance alone only tells that an effect is unlikely to be due to chance given to the sample size—not that the effect is meaningful, impactful, or practically important. Especially in large samples, even trivial differences can reach significance. 
+
+As a researcher, I value my results, so even though the size could be tiny, it is still important to share my research. This helps this scientific record be complete and unbiased. Explaining the context of a small sample size helps expand why it is significant and maintains importance. A tiny effect can be practically important at scale and could be the first step towards discovering a larger pattern. Reporting small effects can also help other researchers by helping them be efficient in saving money and time. A part of the context of the report needs to be the fact that the size is small. Science can benefit from all sizes of results, but for results to have impacts on society, sample sizes need to be communicated so they can then be improved for greater sizes.  
+
+Balancing statistical significance with practical or social importance means looking beyond the p-value and asking whether the effect truly matters in the real world. Statistical significance only tells you that an effect is unlikely to be due to chance given the sample size; it does not tell you whether the effect is meaningful, or worth acting on. To balance statistical significance, one needs to interpret results, which include examining the effect of size, confidence intervals, and the context of the problem. Statistical significance also needs to include whether or not it has a limited practical impact.  This prevents trivial effects from being overstated and helps ensure that decisions in policy, healthcare, education, or other fields are guided by evidence that is not only statistically reliable but also genuinely meaningful.  
+
+As aforementioned, it is vitally important that researchers are transparent in their findings to help future research and results. Researchers need to elaborate on what effect sizes mean and what they do not mean. Along with sample sizes, researchers need to communicate limitations and uncertain or alternate explanations. 
+
+All of these things play in to why and how a sample size can be used for future research and bring important information to society and science. The main key component through all of it is transparency in findings by the researcher as this can be what leads to success or prevention in future research.  
+<!-- RESPONSE-END -->
+
+---
+
+## Word Count & Range Check
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+get_response_text <- function() {
+  f <- knitr::current_input()
+  if (is.null(f) || !file.exists(f)) return("")
+  x <- readLines(f, warn = FALSE)
+  # Find the lines that EXACTLY match the start/end markers
+  s <- grep("^<!-- RESPONSE-START -->$", x)
+  e <- grep("^<!-- RESPONSE-END -->$", x)
+  if (length(s) != 1 || length(e) != 1 || e <= s) return("")
+  paste(x[(s + 1L):(e - 1L)], collapse = "\n")
+}
+count_words <- function(txt) {
+  # Remove code blocks and inline code before counting
+  txt <- gsub("```[\\s\\S]*?```", " ", txt, perl = TRUE)
+  txt <- gsub("`[^`]*`", " ", txt, perl = TRUE)
+  # Keep letters, numbers, spaces, hyphens, and apostrophes
+  txt <- gsub("[^\\p{L}\\p{N}\\s'-]", " ", txt, perl = TRUE)
+  # Split by whitespace and count non-empty words
+  words <- unlist(strsplit(txt, "\\s+", perl = TRUE))
+  words <- words[nzchar(words)]
+  length(words)
+}
+txt <- get_response_text()
+n <- count_words(txt)
+minw <- as.integer(params$word_min)
+maxw <- as.integer(params$word_max)
+in_range <- n >= minw && n <= maxw
+cat(sprintf("**Word count:** %d  \n", n))
+cat(sprintf("**Required range (%s):** %d–%d words  \n",
+            toupper(params$course), minw, maxw))
+cat(if (in_range) "**Status:** ✅ In range\n" else "**Status:** ❌ Out of range\n")
+```
