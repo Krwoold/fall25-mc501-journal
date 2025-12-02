@@ -1,0 +1,66 @@
+---
+title: "2025-10-06"
+format:
+  html: default
+  pdf: default
+params:
+  course: "mc501"
+  word_min: 450
+  word_max: 500
+ 
+  p3: 'Think about a time you were measured or evaluated—maybe on a test, a performance review, or even a personality quiz. Did the measure feel reliable (consistent)? Did it feel valid (accurate)? Explain your experience and how it relates to the difference between reliability and validity. Why is it essential for a measure to be both? Which one seems more complicated to achieve, and why?'
+---
+
+## Choose **one** prompt to answer
+
+> **Prompt C:** `r params$p3`
+
+------------------------------------------------------------------------
+
+## Response
+
+<!-- RESPONSE-START -->
+
+I will use the experience of taking a personality test. I am a person who values personality tests a lot. Things like enneagrams and Myers Briggs test matter a lot to me. I like knowing myself and my subconscious habits. That being said, I pride myself on being an enneagram 3w2, but in some test results I have gotten that I can be 2w3. Now, the measure can and cannot feel reliable at the same time because of course I can change as a person and select different answers than previous times I have taken the test. However, the fact that I have received similar alternate answers, a 2w3 and a 3w2, makes me think the measure is somewhat consistent and accurate because there must be some common denominators from my personality that are being represented and perceived by the test. When I think of reliability, I think of the fact that I am getting a similar answer multiple times after taking the test. Although, when I think of validity I think of how I think of myself in comparison to how the test sees me. Depending on the answer, there are more or less parts of the test that I see as valid to how I actually see myself. Obviously, I am more confident in the test when I think its measurements are both valid and consistent and those two factors are what helped me continue to retake the test in the past. However, most recently since I have received results that I am more of a 2w3 and not a 3w2, I have hesitated at the tests accuracy in reading me because I personally feel more inclined to one answer than another. I think it is harder to produce a test that is valid. Because if someone is hastily taking any test, regardless if it is a personality test or not, the measure can be consistently good or bad throughout the test because of the way the test was taken, but it is hard to have a valid measurement if someone took a test poorly. Without reliability, results from a test are useless. If a test gives drastically different results then the score can’t be trusted for anything. On the flip side, if a test’s validity is questionable, a measure could be considered consistently wrong. If a measure is invalid, then you have a precise, consistent measure of the wrong thing. It is essential for a measure to be both because without both measurements it is hard for research to be valid while not reliable or reliable while not valid. Basically, you cannot have one or the other; a test and research should be both valid and reliable.
+
+*Write your answer to **one** of the prompts here. Do not write anything else in this chapter.* <!-- RESPONSE-END -->
+
+------------------------------------------------------------------------
+
+## Word Count & Range Check
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+get_response_text <- function() {
+  f <- knitr::current_input()
+  if (is.null(f) || !file.exists(f)) return("")
+  x <- readLines(f, warn = FALSE)
+  # Find the lines that EXACTLY match the start/end markers
+  s <- grep("^<!-- RESPONSE-START -->$", x)
+  e <- grep("^<!-- RESPONSE-END -->$", x)
+  if (length(s) != 1 || length(e) != 1 || e <= s) return("")
+  paste(x[(s + 1L):(e - 1L)], collapse = "\n")
+}
+count_words <- function(txt) {
+  # Remove code blocks and inline code before counting
+  txt <- gsub("```[\\s\\S]*?```", " ", txt, perl = TRUE)
+  txt <- gsub("`[^`]*`", " ", txt, perl = TRUE)
+  # Keep letters, numbers, spaces, hyphens, and apostrophes
+  txt <- gsub("[^\\p{L}\\p{N}\\s'-]", " ", txt, perl = TRUE)
+  # Split by whitespace and count non-empty words
+  words <- unlist(strsplit(txt, "\\s+", perl = TRUE))
+  words <- words[nzchar(words)]
+  length(words)
+}
+txt <- get_response_text()
+n <- count_words(txt)
+minw <- as.integer(params$word_min)
+maxw <- as.integer(params$word_max)
+in_range <- n >= minw && n <= maxw
+cat(sprintf("**Word count:** %d  \n", n))
+cat(sprintf("**Required range (%s):** %d–%d words  \n",
+            toupper(params$course), minw, maxw))
+cat(if (in_range) "**Status:** ✅ In range\n" else "**Status:** ❌ Out of range\n")
+```
